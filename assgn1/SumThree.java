@@ -1,3 +1,5 @@
+package assgn1;
+
 public class SumThree {
     public static void main(String[] args) {
         if(args.length==3) {
