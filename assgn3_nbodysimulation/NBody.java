@@ -3,10 +3,12 @@ package assgn3_nbodysimulation;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 public class NBody {
     public static void main(String[] args) {
         double T = Double.parseDouble(args[0]);
-        double t = Double.parseDouble(args[1]);
+        double dt = Double.parseDouble(args[1]);
+        double t=0.0;
         try{
         File inputfile = new File("assgn3_nbodysimulation/planets.txt");
         Scanner fscan = new Scanner(inputfile); //creating a scanner object for the file
@@ -18,6 +20,10 @@ public class NBody {
         double[] vely = new double[n];
         double[] mass = new double[n];
         String[] name = new String[n];
+        double[] fx= new double[n];
+        double[] fy=new double[n];
+        double[] ax=new double[n];
+        double[] ay=new double[n];
 
         for (int i = 0; i < n; i++) {
             posx[i] = fscan.nextDouble();
@@ -37,10 +43,39 @@ public class NBody {
             System.out.println("Mass: " + mass[i]);
             System.out.println("Image Name: " + name[i]);
         }
+        fscan.close();
 
-    } catch (FileNotFoundException e) {
-        System.err.println("File not found: " + e.getMessage());
-    } catch (NumberFormatException e) {
-        System.err.println("Invalid number format: " + e.getMessage());
-
+        while(t<T){
+            // Reset forces
+            for (int i = 0; i < n; i++) {
+                fx[i] = 0;
+                fy[i] = 0;
+            }
+            //calculating force
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                if(i!=j){
+                double dx=posx[j]-posx[i];
+                double dy=posy[j]-posy[i];
+                double d=Math.sqrt(Math.pow(dx,2)+ Math.pow(dy,2));
+                double force= 6.6743* Math.pow(10,-11)*mass[i]*mass[j]/Math.pow(d,2); //force of each element on i
+                if(d!=0){
+                fx[i]=fx[i]+(force*(dx/d));
+                fy[i]=fy[i]+(force*(dy/d));}
+                }
+            }
+        }
+        //calculating acceleration, velocity and positions
+            for(int i=0;i<n;i++){
+                    ax[i]=fx[i]/mass[i];
+                    ay[i]=fy[i]/mass[i];
+                    velx[i] += ax[i] * dt;
+                    vely[i] += ay[i] * dt;
+                    posx[i] += velx[i] * dt;
+                    posy[i] += vely[i] * dt;
+                    System.out.println("Time: " + t + " Particle " + (i + 1) + " - Position: (" + posx[i] + ", " + posy[i] + ") - Velocity: (" + velx[i] + ", " + vely[i] + ")");
+                }
+            t=t+dt; //incrementing the time
+        } }catch (FileNotFoundException e) {
+                System.err.println("File not found: " + e.getMessage());
     }}}
