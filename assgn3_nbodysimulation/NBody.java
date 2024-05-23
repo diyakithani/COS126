@@ -1,5 +1,7 @@
 package assgn3_nbodysimulation;
 
+import lib.stdlib.StdDraw;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -9,6 +11,10 @@ public class NBody {
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         double t=0.0;
+
+
+
+
         try{
         File inputfile = new File("assgn3_nbodysimulation/planets.txt");
         Scanner fscan = new Scanner(inputfile); //creating a scanner object for the file
@@ -44,6 +50,7 @@ public class NBody {
             System.out.println("Image Name: " + name[i]);
         }
         fscan.close();
+
 
         while(t<T){
             // Reset forces
