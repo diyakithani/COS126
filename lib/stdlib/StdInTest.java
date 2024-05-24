@@ -2,6 +2,10 @@
  * Test client for StdIn and In. 
  **/
 
+import lib.stdlib.In;
+import lib.stdlib.StdIn;
+import lib.stdlib.StdOut;
+
 import java.util.Scanner;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;

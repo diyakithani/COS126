@@ -11,6 +11,13 @@ public class NBody {
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         double t=0.0;
+        StdDraw.setPenRadius(0.01);
+
+
+
+
+
+        StdDraw.setPenColor(StdDraw.RED);
 
 
 
@@ -30,6 +37,7 @@ public class NBody {
         double[] fy=new double[n];
         double[] ax=new double[n];
         double[] ay=new double[n];
+
 
         for (int i = 0; i < n; i++) {
             posx[i] = fscan.nextDouble();
@@ -51,8 +59,12 @@ public class NBody {
         }
         fscan.close();
 
+        StdDraw.setScale(-rad, rad);
+
 
         while(t<T){
+            StdDraw.enableDoubleBuffering();
+
             // Reset forces
             for (int i = 0; i < n; i++) {
                 fx[i] = 0;
@@ -74,15 +86,25 @@ public class NBody {
         }
         //calculating acceleration, velocity and positions
             for(int i=0;i<n;i++){
-                    ax[i]=fx[i]/mass[i];
-                    ay[i]=fy[i]/mass[i];
-                    velx[i] += ax[i] * dt;
-                    vely[i] += ay[i] * dt;
-                    posx[i] += velx[i] * dt;
-                    posy[i] += vely[i] * dt;
-                    System.out.println("Time: " + t + " Particle " + (i + 1) + " - Position: (" + posx[i] + ", " + posy[i] + ") - Velocity: (" + velx[i] + ", " + vely[i] + ")");
+                StdDraw.picture(0.5,0.5,"assgn3_nbodysimulation/starfield.jpg");
+                StdDraw.point(posx[i], posy[i]);
+                ax[i]=fx[i]/mass[i];
+                ay[i]=fy[i]/mass[i];
+                velx[i] += ax[i] * dt;
+                vely[i] += ay[i] * dt;
+                posx[i] += velx[i] * dt;
+                posy[i] += vely[i] * dt;
+                System.out.println("Time: " + t + " Particle " + (i + 1) + " - Position: (" + posx[i] + ", " + posy[i] + ") - Velocity: (" + velx[i] + ", " + vely[i] + ")");
+                StdDraw.disableDoubleBuffering();
+
+
+
+
+
                 }
             t=t+dt; //incrementing the time
-        } }catch (FileNotFoundException e) {
+        }
+
+        }catch (FileNotFoundException e) {
                 System.err.println("File not found: " + e.getMessage());
     }}}

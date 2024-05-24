@@ -1,3 +1,5 @@
+import lib.stdlib.StdOut;
+
 /******************************************************************************
  *  Compilation:  javac UnicodeTest.java
  *  Execution:    java  UnicodeTest
