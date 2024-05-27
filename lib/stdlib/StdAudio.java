@@ -1,4 +1,4 @@
-/******************************************************************************
+package lib.stdlib; /******************************************************************************
  *  Compilation:  javac StdAudio.java
  *  Execution:    java StdAudio
  *  Dependencies: none

@@ -1,5 +1,6 @@
 package assgn3_nbodysimulation;
 
+import lib.stdlib.StdAudio;
 import lib.stdlib.StdDraw;
 
 import java.io.File;
@@ -8,18 +9,16 @@ import java.util.Scanner;
 
 public class NBody {
     public static void main(String[] args) {
+        double[] samples = StdAudio.read("assgn3_nbodysimulation/music/2001.wav");
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
         double t=0.0;
-        StdDraw.setPenRadius(0.01);
-
+        StdDraw.setPenRadius(0.03);
 
 
 
 
         StdDraw.setPenColor(StdDraw.RED);
-
-
 
 
         try{
@@ -60,11 +59,18 @@ public class NBody {
         fscan.close();
 
         StdDraw.setScale(-rad, rad);
+        StdDraw.enableDoubleBuffering();
+
+
+
+
 
 
         while(t<T){
-            StdDraw.enableDoubleBuffering();
 
+
+            StdDraw.clear();
+            StdDraw.picture(0.5,0.5,"assgn3_nbodysimulation/images/starfield.jpg");
             // Reset forces
             for (int i = 0; i < n; i++) {
                 fx[i] = 0;
@@ -84,10 +90,13 @@ public class NBody {
                 }
             }
         }
+
         //calculating acceleration, velocity and positions
             for(int i=0;i<n;i++){
-                StdDraw.picture(0.5,0.5,"assgn3_nbodysimulation/starfield.jpg");
-                StdDraw.point(posx[i], posy[i]);
+
+
+                StdDraw.picture(posx[i], posy[i],"assgn3_nbodysimulation/images/"+name[i]);
+                StdDraw.show();
                 ax[i]=fx[i]/mass[i];
                 ay[i]=fy[i]/mass[i];
                 velx[i] += ax[i] * dt;
@@ -95,15 +104,14 @@ public class NBody {
                 posx[i] += velx[i] * dt;
                 posy[i] += vely[i] * dt;
                 System.out.println("Time: " + t + " Particle " + (i + 1) + " - Position: (" + posx[i] + ", " + posy[i] + ") - Velocity: (" + velx[i] + ", " + vely[i] + ")");
-                StdDraw.disableDoubleBuffering();
-
-
-
-
-
                 }
-            t=t+dt; //incrementing the time
+
+            StdDraw.pause(20);
+            t=t+dt;//incrementing the time
+
         }
+            StdDraw.disableDoubleBuffering();
+
 
         }catch (FileNotFoundException e) {
                 System.err.println("File not found: " + e.getMessage());
