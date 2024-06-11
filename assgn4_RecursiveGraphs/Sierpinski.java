@@ -4,32 +4,33 @@ import lib.stdlib.StdDraw;
 public class Sierpinski {
     //  Height of an equilateral triangle whose sides are of the specified length.
     public static double height(double length){
-        double h= length*(Math.sqrt((3)/2));
+        double h= length*(Math.sqrt((3))/2);
         return h;
     }
-
-    //  Draws a filled equilateral triangle whose bottom vertex is (x, y)
-    //  of the specified side length.
     public static void filledTriangle(double x, double y, double length) {
         double h=height(length);
         double xs[]={x,x+(length/2),x-(length/2)};
         double ys[]={y,y+h,y+h};
         StdDraw.filledPolygon(xs,ys);
     }
-
-    //  Draws a Sierpinski triangle of order n, such that the largest filled
-    //  triangle has bottom vertex (x, y) and sides of the specified length.
     public static void sierpinski(int n, double x, double y, double length) {
-    }
+        if (n == 0){return;}
+        else{
+        filledTriangle(x, y, length);
+        double h = height(length) ;
+        length=length/2;
+        // Recursively draw three smaller Sierpinski triangles of order n-1
+        sierpinski(n - 1, x, y + h, length); // top triangle
+        sierpinski(n - 1, x - length , y, length ); // left triangle
+        sierpinski(n - 1, x + length , y, length) ; }// right triangle
+        }
 
-    //  Takes an integer command-line argument n;
-    //  draws the outline of an equilateral triangle (pointed upwards) of length 1;
-    //  whose bottom-left vertex is (0, 0) and bottom-right vertex is (1, 0); and
-    //  draws a Sierpinski triangle of order n that fits snugly inside the outline.
     public static void main(String[] args){
+        int n=Integer.parseInt(args[0]);
         StdDraw.setCanvasSize(1000, 1000);
-        StdDraw.setXscale(-50,50);
-        StdDraw.setYscale(-50,50);
-        filledTriangle(0,0,15);
+        StdDraw.line(0,0,1,0);
+        StdDraw.line(0,0,0.5,1);
+        StdDraw.line(1,0,0.5,1);
+        sierpinski(n,0.5,0,0.5);
 }
 }
