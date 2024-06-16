@@ -29,8 +29,8 @@ public class Sierpinski {
         int n=Integer.parseInt(args[0]);
         StdDraw.setCanvasSize(1000, 1000);
         StdDraw.line(0,0,1,0);
-        StdDraw.line(0,0,0.5,1);
-        StdDraw.line(1,0,0.5,1);
+        StdDraw.line(0,0,0.5,0.87);
+        StdDraw.line(1,0,0.5,0.87);
         sierpinski(n,0.5,0,0.5);
 }
 }
